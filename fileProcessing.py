@@ -1,3 +1,6 @@
+# All functions that include manipulating the files are stored here
+# 所有涉及到对文件进行操作的功能都在这
+
 import os
 import re
 import csv
@@ -9,6 +12,7 @@ g_path = 'E:\\database\\BaiduIndex\\2011\\word1\\[北京空气质量],(2011-01-0
 def one_line_tools(path):
     file_list = os.listdir(path)  # path -> list[str] | 返回当前目录下所有文件与文件夹名，包括后缀。不会进入下级目录
     info_list = re.split(r'[\[\],().]', path)  # 用中括号里面的内容去做切分字符串
+    return file_list, info_list
 
 
 def create_path(path):  # path -> action | 使用绝对路径进行路径创建
@@ -19,26 +23,6 @@ def create_path(path):  # path -> action | 使用绝对路径进行路径创建
         os.makedirs(path)
     else:
         return
-
-
-def transpose_matrix(data):  # list[list[]] -> list[list[]] 转置列表中存储的矩阵
-    new_data = []
-    for col_index in range(len(data[0])):
-        new_row = []
-        for row in data:
-            new_row.append(row[col_index])
-        new_data.append(new_row)
-
-    return new_data
-
-
-def de_duplication(data):  # list -> list | 列表去重
-    new_data = []
-    for i in data:
-        if i not in new_data:
-            new_data.append(i)
-
-    return new_data
 
 
 # CSV------------------------------------------------------------------------------------------------------------------
@@ -68,11 +52,7 @@ def write_json(data, output_path='test.json'):  # dict -> json | 把字典写入
 
 
 
-# def dict(dict):
-
-
-
-if __name__ == '__main__':
-    g_data = read_csv(g_path)
-    transpose_matrix(g_data)
-    # write_csv('E:\\test.csv', g_data)
+# if __name__ == '__main__':
+#     g_data = read_csv(g_path)
+#     transpose_matrix(g_data)
+#     # write_csv('E:\\test.csv', g_data)
