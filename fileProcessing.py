@@ -5,6 +5,7 @@ import os
 import re
 import csv
 import json
+import pandas as pd
 
 g_path = 'E:\\database\\BaiduIndex\\2011\\word1\\[北京空气质量],(2011-01-01至2011-12-31),0.csv'  # 文件夹总路径
 
@@ -23,6 +24,12 @@ def create_path(path):  # path -> action | 使用绝对路径进行路径创建
         os.makedirs(path)
     else:
         return
+
+
+# xls------------------------------------------------------------------------------------------------------------------
+def read_xls(input_path):  # path -> dict | 输入文件路径，返回一个字典，键是sheet名，值是sheet内容
+    whole_sheet = pd.read_excel(input_path, sheet_name=None)
+    return whole_sheet
 
 
 # CSV------------------------------------------------------------------------------------------------------------------
@@ -44,15 +51,21 @@ def write_csv(data, output_path='test.csv'):  # list[list[]] -> .csv | 输入一
 
 
 # JSON------------------------------------------------------------------------------------------------------------------
+def read_json(input_path):  # path -> dict | 输入文件路径，返回存储该json的字典
+    with open(input_path, encoding='utf-8') as f:
+        resp = json.load(f)
+        return resp
+
+
 def write_json(data, output_path='test.json'):  # dict -> json | 把字典写入本地json文件
     with open(output_path, "w", encoding='utf-8') as f:
         # json.dump(dict_var, f)  # 写为一行
         json.dump(data, f, indent=2, sort_keys=True, ensure_ascii=False)  # 写为多行
 
 
+# def get_json_tree()
 
-
-# if __name__ == '__main__':
-#     g_data = read_csv(g_path)
-#     transpose_matrix(g_data)
-#     # write_csv('E:\\test.csv', g_data)
+if __name__ == '__main__':
+    res = read_json('hdb.json')
+    keys = res.keys()
+    print(keys)
